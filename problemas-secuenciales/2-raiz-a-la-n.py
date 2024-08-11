@@ -3,16 +3,30 @@
 # de la forma estructurada, como se socializo en clase.
 
 # CALCULAR RAIZ A LA N
-import math
+import threading
 
-def calcular_raiz():
-    numero = float(input("Ingrese el número: "))
-    exponente = float(input("Ingrese el exponente (raíz): "))
-    resultado = math.pow(numero, 1/exponente)
+numero = 0
+exponente = 0
+
+def calcular():
+    resultado = numero ** (1/exponente)
     print(f"La raíz {exponente}-ésima de {numero} es:", resultado)
 
+
+def datos():
+    global numero
+    global exponente
+    numero = float(input("Ingrese el número: "))
+    exponente = float(input("Ingrese el exponente (raíz): "))
+
 def main():
-    calcular_raiz()
+    hilo1 = threading.Thread(target=datos)
+    hilo2 = threading.Thread(target=calcular)
+    hilo1.start()
+    hilo1.join()
+    hilo2.start()
+    hilo2.join()
+
 
 if __name__ == "__main__":
     main()

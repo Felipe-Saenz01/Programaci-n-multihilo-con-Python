@@ -4,21 +4,25 @@
 
 # CONTADOR DE LETRAS DE UNA PALABRA
 import threading
+
 contador_letras = {}
+lock = threading.Lock()
 
 def contar_letras():
-    palabra = input("Ingrese una palabra: ").lower()
     global contador_letras
-    for letra in palabra:
-        if letra.isalpha():
-            if letra in contador_letras:
-                contador_letras[letra] += 1
-            else:
-                contador_letras[letra] = 1
+    with lock:
+        palabra = input("Ingrese una palabra: ").lower()
+        for letra in palabra:
+            if letra.isalpha():
+                if letra in contador_letras:
+                    contador_letras[letra] += 1
+                else:
+                    contador_letras[letra] = 1
 
 
-def mostrar_contador():    
-    print("Contador de letras:", contador_letras)
+def mostrar_contador(): 
+    with lock:   
+        print("Contador de letras:", contador_letras)
 
 def main():
     hilo1 = threading.Thread(target=contar_letras)

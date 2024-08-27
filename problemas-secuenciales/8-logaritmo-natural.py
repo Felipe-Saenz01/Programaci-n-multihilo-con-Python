@@ -7,14 +7,17 @@ import math
 import threading
 
 numero = 0
+lock = threading.Lock()
 
 def calcular_logaritmo():
-    logaritmo = math.log(numero)
-    print("El logaritmo natural de", numero, "es:", logaritmo)
+    with lock:
+        logaritmo = math.log(numero)
+        print("El logaritmo natural de", numero, "es:", logaritmo)
 
 def obtener_numero():
     global numero
-    numero = float(input("Ingrese el número: "))
+    with lock:
+        numero = float(input("Ingrese el número: "))
 
 
 

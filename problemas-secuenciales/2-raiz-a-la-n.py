@@ -7,17 +7,20 @@ import threading
 
 numero = 0
 exponente = 0
+lock = threading.Lock()
 
 def calcular():
-    resultado = numero ** (1/exponente)
-    print(f"La raíz {exponente}-ésima de {numero} es:", resultado)
+    with lock:
+        resultado = numero ** (1/exponente)
+        print(f"La raíz {exponente}-ésima de {numero} es:", resultado)
 
 
 def datos():
     global numero
     global exponente
-    numero = float(input("Ingrese el número: "))
-    exponente = float(input("Ingrese el exponente (raíz): "))
+    with lock:
+        numero = float(input("Ingrese el número: "))
+        exponente = float(input("Ingrese el exponente (raíz): "))
 
 def main():
     hilo1 = threading.Thread(target=datos)

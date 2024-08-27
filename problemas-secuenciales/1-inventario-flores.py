@@ -8,21 +8,24 @@ import threading
 # INVENTARIO
 
 inventario = []
+lock = threading.Lock()
 
 
 def inventario_flores():
     global inventario
     n = int(input("Ingrese el número de tipos de flores en el inventario: "))
-    for i in range(n):
-        flor= []
-        flor += [input(f"Ingrese el nombre de la flor {i+1}: ")]
-        flor += [int(input(f"Ingrese la cantidad de {flor[0]}: "))]
-        inventario += [flor]
+    with lock:
+        for i in range(n):
+            flor= []
+            flor += [input(f"Ingrese el nombre de la flor {i+1}: ")]
+            flor += [int(input(f"Ingrese la cantidad de {flor[0]}: "))]
+            inventario += [flor]
 
 
-def mostrar_invetario():        
-    for item in inventario:
-        print("Hay", item[1], "de", item[0])
+def mostrar_invetario():
+    with lock:        
+        for item in inventario:
+            print("Hay", item[1], "de", item[0])
 
 
 def main():

@@ -8,20 +8,21 @@ cantidad_silabas = 0
 palabra = ''
 letras = []
 vocales = "aeiou"
+lock = threading.Lock()
 
 def contar_silabas():
-    global cantidad_silabas
-    global letras
-    global palabra
-    palabra = input("Ingrese una palabra: ").lower()
-    for letra in palabra:
-        if letra in vocales:
-            cantidad_silabas += 1
-            letras += [letra]
+    global cantidad_silabas, letras, palabra
+    with lock:
+        palabra = input("Ingrese una palabra: ").lower()
+        for letra in palabra:
+            if letra in vocales:
+                cantidad_silabas += 1
+                letras += [letra]
 
 def mostrar_silabas():
-    print("Cantidad de sílabas en la palabra:", cantidad_silabas)
-    print(f"Las vocales en la palabra: {palabra} son: {letras}")
+    with lock:
+        print("Cantidad de sílabas en la palabra:", cantidad_silabas)
+        print(f"Las vocales en la palabra: {palabra} son: {letras}")
 
 
 def main():

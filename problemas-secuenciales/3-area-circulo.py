@@ -6,14 +6,17 @@
 import math
 import threading
 area = 0
+lock = threading.Lock()
 
 def calcular_area_circulo():
     global area
-    radio = float(input("Ingrese el radio del círculo: "))
-    area = math.pi * (radio ** 2)
+    with lock:
+        radio = float(input("Ingrese el radio del círculo: "))
+        area = math.pi * (radio ** 2)
 
 def mostrar_area():
-    print("El área del círculo es:", area)
+    with lock:
+        print("El área del círculo es:", area)
 
 
 def main():

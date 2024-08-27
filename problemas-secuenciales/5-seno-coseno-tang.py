@@ -6,17 +6,20 @@
 import math
 import threading
 radianes = 0
+lock = threading.Lock()
 
 def calcular_trigonometricas():
-    seno = math.sin(radianes)
-    coseno = math.cos(radianes)
-    tangente = math.tan(radianes)
+    with lock:
+        seno = math.sin(radianes)
+        coseno = math.cos(radianes)
+        tangente = math.tan(radianes)
     print(f"Seno: {seno}, Coseno: {coseno}, Tangente: {tangente}")
 
 def obtener_angulo():
     global radianes
-    angulo = float(input("Ingrese el ángulo en grados: "))
-    radianes = math.radians(angulo)
+    with lock:
+        angulo = float(input("Ingrese el ángulo en grados: "))
+        radianes = math.radians(angulo)
 
 def main():
     hilo1 = threading.Thread(target=obtener_angulo)

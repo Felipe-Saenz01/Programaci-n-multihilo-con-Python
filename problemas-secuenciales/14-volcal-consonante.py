@@ -6,19 +6,22 @@
 import threading
 caracter = ''
 vocales = "aeiou"
+lock = threading.Lock()
 
 def identificar_vocal_consonante():
-    if caracter.isalpha() and len(caracter) == 1:
-        if caracter.lower() in vocales:
-            print(f"{caracter} es una vocal.")
+    with lock:
+        if caracter.isalpha() and len(caracter) == 1:
+            if caracter.lower() in vocales:
+                print(f"{caracter} es una vocal.")
+            else:
+                print(f"{caracter} es una consonante.")
         else:
-            print(f"{caracter} es una consonante.")
-    else:
-        print("Ingrese un único carácter alfabético.")
+            print("Ingrese un único carácter alfabético.")
 
 def obtener_datos():
     global caracter
-    caracter = input("Ingrese un carácter alfabético: ")
+    with lock:
+        caracter = input("Ingrese un carácter alfabético: ")
 
 
 def main():

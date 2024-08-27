@@ -6,18 +6,21 @@
 import threading
 
 numeros = []
+lock = threading.Lock()
 
 def ordenar_numeros():
     global numeros
-    n = int(input("Ingrese el número de elementos: "))
-    for i in range(n):
-        numeros += [float(input(f"Ingrese el número {i+1}: "))]
-    numeros.sort(reverse=True)
+    with lock:
+        n = int(input("Ingrese el número de elementos: "))
+        for i in range(n):
+            numeros += [float(input(f"Ingrese el número {i+1}: "))]
+        numeros.sort(reverse=True)
 
 def mostrar_numeros():
-    print("Números ordenados de mayor a menor:")
-    for numero in numeros:
-        print(numero)
+    with lock:
+        print("Números ordenados de mayor a menor:")
+        for numero in numeros:
+            print(numero)
 
 def main():
     hilo1 = threading.Thread(target=ordenar_numeros)

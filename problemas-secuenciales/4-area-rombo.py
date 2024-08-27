@@ -7,17 +7,20 @@ import threading
 
 diagonal1 = 0
 diagonal2 = 0
+lock = threading.Lock()
 
 def calcular_area_rombo():
-    area = (diagonal1 * diagonal2) / 2
-    print("El área del rombo es:", area)
+    with lock:
+        area = (diagonal1 * diagonal2) / 2
+        print("El área del rombo es:", area)
 
 
 def obtener_diagonales():
     global diagonal1
     global diagonal2
-    diagonal1 = float(input("Ingrese la longitud de la primera diagonal: "))
-    diagonal2 = float(input("Ingrese la longitud de la segunda diagonal: "))
+    with lock:
+        diagonal1 = float(input("Ingrese la longitud de la primera diagonal: "))
+        diagonal2 = float(input("Ingrese la longitud de la segunda diagonal: "))
 
 
 def main():

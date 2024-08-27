@@ -6,22 +6,24 @@
 import threading
 inicio = 0
 final = 0
-
+lock = threading.Lock()
 
 def contar_dos_en_dos():
     contador = 0
     numeros= []
-    for num in range(inicio, final + 1, 2):
-        contador += 1
-        numeros += [num]
-    print("Cantidad de números de 2 en 2:", contador)
-    print(f"los numeros son: {numeros}")
+    with lock:
+        for num in range(inicio, final + 1, 2):
+            contador += 1
+            numeros += [num]
+        print("Cantidad de números de 2 en 2:", contador)
+        print(f"los numeros son: {numeros}")
 
 def obtener_datos():
     global inicio
     global final
-    inicio = int(input("Ingrese el número inicial: "))
-    final = int(input("Ingrese el número final: "))
+    with lock:
+        inicio = int(input("Ingrese el número inicial: "))
+        final = int(input("Ingrese el número final: "))
 
 
 def main():

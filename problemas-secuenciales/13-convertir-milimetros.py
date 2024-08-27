@@ -5,15 +5,18 @@
 # CONVERSOR DE MM A CM Y MTS
 import threading
 milimetros = 0
+lock = threading.Lock()
 
 
 def convertir_milimetros():
-    print(f"{milimetros} milímetros equivalen a {milimetros/10} centímetros y {milimetros/1000} metros.")
+    with lock:
+        print(f"{milimetros} milímetros equivalen a {milimetros/10} centímetros y {milimetros/1000} metros.")
 
 
 def obtener_datos():
     global milimetros
-    milimetros = float(input("Ingrese la longitud en milímetros: "))
+    with lock:
+        milimetros = float(input("Ingrese la longitud en milímetros: "))
 
 
 def main():

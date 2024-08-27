@@ -5,19 +5,22 @@
 #  CONVERSOR DE PEASO A DOLARES Y EUROS
 import threading
 cantidad_pesos = 0
+lock = threading.Lock()
 
 
 def convertir_pesos():
-    tasa_dolar = 0.047  # Tasa de cambio de pesos a dólares
-    tasa_euro = 0.039  # Tasa de cambio de pesos a euros
-    cantidad_dolares = cantidad_pesos * tasa_dolar
-    cantidad_euros = cantidad_pesos * tasa_euro
-    print(f"{cantidad_pesos} pesos equivalen a {cantidad_dolares} dólares y {cantidad_euros} euros.")
+    with lock:
+        tasa_dolar = 0.047  # Tasa de cambio de pesos a dólares
+        tasa_euro = 0.039  # Tasa de cambio de pesos a euros
+        cantidad_dolares = cantidad_pesos * tasa_dolar
+        cantidad_euros = cantidad_pesos * tasa_euro
+        print(f"{cantidad_pesos} pesos equivalen a {cantidad_dolares} dólares y {cantidad_euros} euros.")
 
 
 def obtener_datos():
     global cantidad_pesos
-    cantidad_pesos = float(input("Ingrese la cantidad en pesos: "))
+    with lock:
+        cantidad_pesos = float(input("Ingrese la cantidad en pesos: "))
 
 
 

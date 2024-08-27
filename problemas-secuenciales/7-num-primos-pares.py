@@ -7,20 +7,23 @@ import threading
 
 primos = []
 pares = []
+lock = threading.Lock()
 
 def numeros_primos_pares():
     rango = int(input("Ingrese el rango de números: "))
     global primos
     global pares
-    for num in range(2, rango + 1):
-        if all(num % i != 0 for i in range(2, int(num ** 0.5) + 1)):
-            primos.append(num)
-        if num % 2 == 0:
-            pares.append(num)
+    with lock:
+        for num in range(2, rango + 1):
+            if all(num % i != 0 for i in range(2, int(num ** 0.5) + 1)):
+                primos.append(num)
+            if num % 2 == 0:
+                pares.append(num)
 
 def mostrar_primos_pares():
-    print("Números primos:", primos)
-    print("Números pares:", pares)
+    with lock:
+        print("Números primos:", primos)
+        print("Números pares:", pares)
 
 
 def main():
